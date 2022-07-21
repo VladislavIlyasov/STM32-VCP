@@ -1,0 +1,5 @@
+../Core/Src/Func.c:9:6:StartMenu	8	static
+../Core/Src/Func.c:20:6:IfReceivedV	32	static
+../Core/Src/Func.c:34:6:IfReceivedA	16	static
+../Core/Src/Func.c:46:6:IfReceivedL	32	static
+../Core/Src/Func.c:70:6:button_state	40	static

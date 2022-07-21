@@ -29,6 +29,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -54,6 +55,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+
+// queue_t queueIn, queueOut;
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

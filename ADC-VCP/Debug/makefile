@@ -16,6 +16,7 @@ RM := rm -rf
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Logic/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -64,8 +65,8 @@ all: main-build
 main-build: ADC-VCP.elf secondary-outputs
 
 # Tool invocations
-ADC-VCP.elf ADC-VCP.map: $(OBJS) $(USER_OBJS) C:\Users\vladr\STM32CubeIDE\workspace_1.9.0\ADC-VCP\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "ADC-VCP.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\vladr\STM32CubeIDE\workspace_1.9.0\ADC-VCP\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ADC-VCP.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+ADC-VCP.elf ADC-VCP.map: $(OBJS) $(USER_OBJS) C:\Users\vladr\STM32CubeIDE\workspace_1.9.0\STM32-VCP\ADC-VCP\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "ADC-VCP.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\vladr\STM32CubeIDE\workspace_1.9.0\STM32-VCP\ADC-VCP\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ADC-VCP.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

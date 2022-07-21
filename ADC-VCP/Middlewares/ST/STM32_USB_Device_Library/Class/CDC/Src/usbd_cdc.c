@@ -127,6 +127,8 @@ static uint8_t  *USBD_CDC_GetOtherSpeedCfgDesc(uint16_t *length);
 
 uint8_t  *USBD_CDC_GetDeviceQualifierDescriptor(uint16_t *length);
 
+
+
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_CDC_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =
 {
@@ -747,6 +749,9 @@ static uint8_t  USBD_CDC_EP0_RxReady(USBD_HandleTypeDef *pdev)
     hcdc->CmdOpCode = 0xFFU;
 
   }
+
+
+
   return USBD_OK;
 }
 

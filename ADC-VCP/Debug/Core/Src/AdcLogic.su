@@ -1,0 +1,4 @@
+../Core/Src/AdcLogic.c:13:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/AdcLogic.c:36:6:ADC_Start	16	static
+../Core/Src/AdcLogic.c:42:6:ADC_Result	24	static
+../Core/Src/AdcLogic.c:77:6:ADCstop	16	static

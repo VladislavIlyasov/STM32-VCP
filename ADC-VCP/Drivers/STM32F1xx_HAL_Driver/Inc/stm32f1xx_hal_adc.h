@@ -199,6 +199,9 @@ typedef struct __ADC_HandleTypeDef
 }ADC_HandleTypeDef;
 
 
+
+
+
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
 /**
   * @brief  HAL ADC Callback ID enumeration definition

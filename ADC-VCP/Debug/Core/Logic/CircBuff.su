@@ -1,0 +1,2 @@
+../Core/Logic/CircBuff.c:19:5:put	32	static
+../Core/Logic/CircBuff.c:37:5:get	32	static

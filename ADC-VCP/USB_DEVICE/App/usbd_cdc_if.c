@@ -267,11 +267,15 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
 
 
-	memcpy(Rec_Data, Buf, 4); //8
-	//memcpy(Rec_Len, Len, sizeof(Len));
-	 Rec_Len = *Len;
-	 ReceiveFlag =1;
+	//memcpy(Rec_Data, Buf, 4); //8
 
+
+	//memcpy(Rec_Len, Len, sizeof(Len));
+
+	 //Rec_Len = *Len;
+	// ReceiveFlag =1;
+
+	 StackHandler(Buf, *Len);
 
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
