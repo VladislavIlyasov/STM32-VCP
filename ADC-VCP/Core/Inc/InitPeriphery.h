@@ -4,7 +4,7 @@
 
 
 void SystemClock_Config(void);
-void MX_ADC1_Init(ADC_HandleTypeDef* hadc);
+void MX_ADC1_Init();
 void MX_GPIO_Init(void);
 void MX_DMA_Init(void);
-void MX_TIM2_Init(TIM_HandleTypeDef* htim2);
+void MX_TIM2_Init();

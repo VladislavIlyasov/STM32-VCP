@@ -18,7 +18,7 @@ typedef struct queue {
 
 
 
-
+ int BuffInit();
  int put(struct queue *q, uint8_t *data, size_t size);
  int get(struct queue *q, uint8_t *data, size_t size);
 

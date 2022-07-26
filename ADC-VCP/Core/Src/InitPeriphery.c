@@ -3,6 +3,9 @@
 #include "stm32f1xx_hal.h"
 //#include "InitPeripheria.h"
 
+extern TIM_HandleTypeDef htim2;
+extern ADC_HandleTypeDef hadc1;
+
 
 void SystemClock_Config(void)
 {
@@ -81,7 +84,8 @@ void SystemClock_Config(void)
 
 
 
-void MX_ADC1_Init(ADC_HandleTypeDef *hadc1)
+
+void MX_ADC1_Init()
  {
 
    /* USER CODE BEGIN ADC1_Init 0 */
@@ -96,14 +100,14 @@ void MX_ADC1_Init(ADC_HandleTypeDef *hadc1)
 
    /** Common config
    */
-   hadc1->Instance = ADC1;
-   hadc1->Init.ScanConvMode = ADC_SCAN_ENABLE;
-   hadc1->Init.ContinuousConvMode = DISABLE;
-   hadc1->Init.DiscontinuousConvMode = DISABLE;
-   hadc1->Init.ExternalTrigConv = ADC_SOFTWARE_START;
-   hadc1->Init.DataAlign = ADC_DATAALIGN_RIGHT;
-   hadc1->Init.NbrOfConversion = 2;
-   if (HAL_ADC_Init(hadc1) != HAL_OK)
+   hadc1.Instance = ADC1;
+   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+   hadc1.Init.ContinuousConvMode = DISABLE;
+   hadc1.Init.DiscontinuousConvMode = DISABLE;
+   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+   hadc1.Init.NbrOfConversion = 2;
+   if (HAL_ADC_Init(&hadc1) != HAL_OK)
    {
      Error_Handler();
    }
@@ -113,7 +117,7 @@ void MX_ADC1_Init(ADC_HandleTypeDef *hadc1)
    sConfig.Channel = ADC_CHANNEL_0;
    sConfig.Rank = ADC_REGULAR_RANK_1;
    sConfig.SamplingTime = ADC_SAMPLETIME_7CYCLES_5;
-   if (HAL_ADC_ConfigChannel(hadc1, &sConfig) != HAL_OK)  // &&
+   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)  // &&
    {
      Error_Handler();
    }
@@ -122,12 +126,12 @@ void MX_ADC1_Init(ADC_HandleTypeDef *hadc1)
    */
    sConfig.Channel = ADC_CHANNEL_1;
    sConfig.Rank = ADC_REGULAR_RANK_2;
-   if (HAL_ADC_ConfigChannel(hadc1, &sConfig) != HAL_OK)  //&&
+   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)  //&&
    {
      Error_Handler();
    }
    /* USER CODE BEGIN ADC1_Init 2 */
-   HAL_ADCEx_Calibration_Start(hadc1);  //&&
+   HAL_ADCEx_Calibration_Start(&hadc1);  //&&
    /* USER CODE END ADC1_Init 2 */
 
  }
@@ -150,7 +154,7 @@ void MX_DMA_Init(void)
 
 }
 
-void MX_TIM2_Init(TIM_HandleTypeDef* htim2)
+void MX_TIM2_Init()
 {
 
   /* USER CODE BEGIN TIM2_Init 0 */
@@ -163,24 +167,24 @@ void MX_TIM2_Init(TIM_HandleTypeDef* htim2)
   /* USER CODE BEGIN TIM2_Init 1 */
 
   /* USER CODE END TIM2_Init 1 */
-  htim2->Instance = TIM2;
-  htim2->Init.Prescaler = 11999;
-  htim2->Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2->Init.Period = 499;
-  htim2->Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2->Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(htim2) != HAL_OK)
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 11999;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 499;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
   }
   sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(htim2, &sClockSourceConfig) != HAL_OK)
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(htim2, &sMasterConfig) != HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }

@@ -1,6 +1,6 @@
 
  // #include "../LogicH/CircBuff.h"
-  #include "main.h"
+
   #include "../LogicH/CircBuff.h"
 //#include "usb_device.h"
 
@@ -13,7 +13,25 @@
 
 struct queue queueIn, queueOut;
 
+int BuffInit(){
 
+	//// Check this f
+
+
+
+	queueIn.buffer      = malloc(128);
+			queueIn.buffer_size = 128;
+			queueIn.head        = 0;
+			queueIn.tail        = 0;
+			queueIn.bytes_avail = 0;
+
+			queueOut.buffer      = malloc(256);
+			queueOut.buffer_size = 256;
+			queueOut.head        = 0;
+			queueOut.tail        = 0;
+			queueOut.bytes_avail = 0;
+
+}
 
 
 int put(queue_t *q, uint8_t *data, size_t size) {

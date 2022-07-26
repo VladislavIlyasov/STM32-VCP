@@ -58,7 +58,7 @@ TIM_HandleTypeDef htim2;
 
 // char str_V[23] = {0};
 
-  char trans_str[64] = {0,};
+//  char trans_str[64] = {0,};
 
  // volatile uint16_t adc_2[2] = {0,}; // у нас два канала поэтому массив из двух элементов
 
@@ -68,7 +68,8 @@ TIM_HandleTypeDef htim2;
 
 
 
-  volatile uint8_t flag = 0;
+ // volatile uint8_t flag = 0;
+
   // volatile uint8_t FlagInterADC = 0;
   // volatile uint8_t	FlagStartADC =0;
 
@@ -80,28 +81,29 @@ TIM_HandleTypeDef htim2;
 
  // int btn_cnt =0;
 
-  uint8_t Rec_Data[4]={0};   // 8
-  uint32_t Rec_Len=0;
+//  uint8_t Rec_Data[4]={0};   // 8
+//  uint32_t Rec_Len=0;
 
 
 
   //uint32_t Sum_Len=0;
 
-  short Ovf=0;
+//  short Ovf=0;
 
 
 
-  uint32_t Rec_Stack[16]={0};  // 32 64
+//  uint32_t Rec_Stack[16]={0};  // 32 64
 
- int ReceiveFlag = 0;
- uint8_t BusyFlag = 0;
-
-
- int i =0;
+// int ReceiveFlag = 0;
 
 
 
- int OutRead = 0;
+
+
+
+
+
+// int OutRead = 0;
 
 
 
@@ -135,18 +137,18 @@ TIM_HandleTypeDef htim2;
 // void ADC_Start(void);
 
 
-extern uint8_t BusyCheck (void);
-extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+//extern uint8_t BusyCheck (void);
+//extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
-extern uint8_t  USBD_CDC_EP0_RxReady(USBD_HandleTypeDef *pdev);
+//extern uint8_t  USBD_CDC_EP0_RxReady(USBD_HandleTypeDef *pdev);
 
-void ReceiveHandler(void);
+// void ReceiveHandler(void);
 
-void StackHandler(uint8_t* Data, uint32_t Len);
+// void StackHandler(uint8_t* Data, uint32_t Len);
 
-int OutputHandler(void);
+// int OutputHandler(void);
 
-void OutputStack(char TransMes[], uint8_t Len);
+// void OutputStack(char TransMes[], uint8_t Len);
 //uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE END PFP */
@@ -160,7 +162,7 @@ void OutputStack(char TransMes[], uint8_t Len);
 
 
 
-extern struct queue queueIn, queueOut;
+// extern struct queue queueIn, queueOut;
 
 
 
@@ -182,22 +184,15 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
-	queueIn.buffer      = malloc(128);
-		queueIn.buffer_size = 128;
-		queueIn.head        = 0;
-		queueIn.tail        = 0;
-		queueIn.bytes_avail = 0;
 
-		queueOut.buffer      = malloc(256);
-		queueOut.buffer_size = 256;
-		queueOut.head        = 0;
-		queueOut.tail        = 0;
-		queueOut.bytes_avail = 0;
+
+
+		BuffInit();
 
 	//put(&queue, "hello ", 6);
 	//put(&queue, "world\n", 7);
 
-	char s[13];
+//	char s[13];
 
 	//get(&queue, (uint8_t *) s, 13);
 
@@ -225,8 +220,8 @@ int main(void)
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   MX_DMA_Init();
-  MX_ADC1_Init(&hadc1);
-  MX_TIM2_Init(&htim2);
+  MX_ADC1_Init();  /// пересмотреть без передачи
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
  // StartMenu();
@@ -261,17 +256,14 @@ int main(void)
 
 
 		//  if(BusyFlag == USBD_OK && Sum_Len!=i ){
-	      if(queueIn.tail != queueIn.head ){
-	    	  ReceiveHandler();
-	    	  i++;
-	    	//  if(BusyFlag == USBD_BUSY && i!=0){i--;}
-	      }
+
+	      LogicReadInpStack();
+
 
 
 	     // if(BusyFlag == USBD_OK && queueOut.bytes_avail!=0 ){
-	      if(queueOut.bytes_avail!=0 ){
-	    	  OutputHandler();
-	      }
+
+	      LogicOutpStackCheck();
 
 
 	      }
@@ -316,118 +308,12 @@ int main(void)
 
 /* USER CODE BEGIN 4 */
 
-short OvfIn;
-void StackHandler(uint8_t* Data, uint32_t Len){
-
-	if(Len>4){Len =4;}
-
-	OvfIn = put(&queueIn, Data, Len);
-
-     if(OvfIn==0){
-
-    	 while(BusyFlag != USBD_OK){
-    	      BusyFlag = BusyCheck();
-    	      if(BusyFlag == USBD_OK)
-    	      {BusyFlag = CDC_Transmit_FS("\r\n Input Stack Overflow",23);
-    	         break;}
-    	   }
-
-     }
-
-
-}
-
-
-
-
-char Out[8];
-int OutputHandler(){
-    int Cond =0;
-    BusyFlag = USBD_BUSY;
-     	 Cond = get(&queueOut,(uint8_t *) Out, 8);// нужна переменная  8!! check if you have 8
-      if (Cond == 0){
-    	  short LenOfMess = queueOut.bytes_avail;
-    	  get(&queueOut,(uint8_t *) Out,LenOfMess);
-
-
-    	  /// busy check here
-    	  while(BusyFlag != USBD_OK){
-    	  	         	  BusyFlag = BusyCheck();
-                  if(BusyFlag == USBD_OK){BusyFlag = CDC_Transmit_FS(Out,LenOfMess);
-                  break;}
-    	  	           }
-    	 // BusyFlag = CDC_Transmit_FS(Out,LenOfMess);// bytes avail =0
-    	  return 0;
-      }
-
-      while(BusyFlag != USBD_OK){
-         	  	         	  BusyFlag = BusyCheck();
-         if(BusyFlag == USBD_OK){BusyFlag = CDC_Transmit_FS(Out,8);
-         break;}
-         	  	           }
-	//BusyFlag = CDC_Transmit_FS(Out,8);
-
-
-
-	return 1;
-	}
-
-char InputSymb[2];
-void ReceiveHandler(){
-
-
-
-	//  CDC_Transmit_FS(Rec_Len,sizeof(Rec_Len));
-
-	get(&queueIn, (uint8_t *) InputSymb, 1);
-
-
-
-	switch( InputSymb[0] )
-	{
-	    case 'l':{
-	    	IfReceivedL();
-	    	break;
-	    }
-	    case 'v':{
-	    	IfReceivedV();
-	    	break;
-	    }
-	    case 'a':{
-	    	IfReceivedA(&htim2);
-	    	break;
-	    }
-	    case 'e':{
-	    		ADCstop(&hadc1, &htim2);
-	  	    	StartMenu();
-	  	    	break;
-	  	    }
-	    default :
-	    	StartMenu();
-	}
-
-
-
-}
 
 
 
 
 
 
-int OvfOut;
-void OutputStack(char TransMes[], uint8_t Len){
-
-        // ovf
-		OvfOut =put(&queueOut, TransMes, Len);
-		if (OvfOut==0)
-		{
-			queueIn.bytes_avail++;
-			queueIn.head = (queueIn.head--) % queueIn.buffer_size;
-		}
-
-
-}
 
 
 

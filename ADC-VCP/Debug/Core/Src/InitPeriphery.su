@@ -1,5 +1,5 @@
-../Core/Src/InitPeriphery.c:7:6:SystemClock_Config	88	static
-../Core/Src/InitPeriphery.c:50:7:MX_GPIO_Init	40	static
-../Core/Src/InitPeriphery.c:84:6:MX_ADC1_Init	32	static
-../Core/Src/InitPeriphery.c:140:6:MX_DMA_Init	16	static
-../Core/Src/InitPeriphery.c:153:6:MX_TIM2_Init	40	static
+../Core/Src/InitPeriphery.c:10:6:SystemClock_Config	88	static
+../Core/Src/InitPeriphery.c:53:7:MX_GPIO_Init	40	static
+../Core/Src/InitPeriphery.c:88:6:MX_ADC1_Init	24	static
+../Core/Src/InitPeriphery.c:144:6:MX_DMA_Init	16	static
+../Core/Src/InitPeriphery.c:157:6:MX_TIM2_Init	32	static

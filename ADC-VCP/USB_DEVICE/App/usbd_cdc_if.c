@@ -33,10 +33,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 
-extern uint8_t Rec_Data[128];
-extern uint32_t Rec_Len;
-extern int ReceiveFlag;
-extern int BusyFlag;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY

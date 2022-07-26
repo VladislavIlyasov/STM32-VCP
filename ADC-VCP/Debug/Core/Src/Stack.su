@@ -1,0 +1,6 @@
+../Core/Src/Stack.c:18:6:StackHandler	24	static
+../Core/Src/Stack.c:39:6:ReceiveHandler	16	static
+../Core/Src/Stack.c:86:5:OutputHandler	24	static
+../Core/Src/Stack.c:120:6:OutputStack	24	static
+../Core/Src/Stack.c:138:6:LogicReadInpStack	8	static
+../Core/Src/Stack.c:151:6:LogicOutpStackCheck	8	static
